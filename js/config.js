@@ -19,13 +19,38 @@ const API_SITES = {
         api: 'https://json.heimuer.xyz',
         name: '黑木耳',
         detail: 'https://heimuer.tv',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
     ffzy: {
         api: 'http://ffzy5.tv',
         name: '非凡影视',
         detail: 'http://ffzy5.tv',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
-    
+    ysgc: {
+        api: 'https://ysgc.cc',
+        name: '影视工厂',
+        detail: 'https://ysgc.cc',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
+    },
+    lzizy: {
+        api: 'https://cj.lzizy.net',
+        name: '量子资源',
+        detail: 'https://lzizy.net',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
+    },
+    huawei: {
+        api: 'https://huaweiba.live',
+        name: '华为吧',
+        detail: 'https://huaweiba.live/',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
+    },
+    kuaikan: {
+        api: 'https://kuaikan-api.com',
+        name: '快看影视',
+        detail: 'https://kuaikan-api.com',
+        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
+    }
 };
 
 // 抽象API请求配置

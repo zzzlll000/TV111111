@@ -10,9 +10,9 @@ function toggleSettings(e) {
 const toastQueue = [];
 let isShowingToast = false;
 
-function showToast(message, type = 'error') {
-    // 将新的toast添加到队列
-    toastQueue.push({ message, type });
+function showToast(message, type = 'error', duration = 3000) {
+    // 将新的toast添加到队列，支持自定义显示时间
+    toastQueue.push({ message, type, duration });
     
     // 如果当前没有显示中的toast，则开始显示
     if (!isShowingToast) {
@@ -27,27 +27,43 @@ function showNextToast() {
     }
     
     isShowingToast = true;
-    const { message, type } = toastQueue.shift();
+    const { message, type, duration } = toastQueue.shift();
     
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
     
-    const bgColors = {
-        'error': 'bg-red-500',
-        'success': 'bg-green-500',
-        'info': 'bg-blue-500',
-        'warning': 'bg-yellow-500'
+    const styles = {
+        'error': {
+            bg: 'bg-red-500',
+            icon: '❌',
+            animation: 'shake'
+        },
+        'success': {
+            bg: 'bg-green-500',
+            icon: '✓',
+            animation: 'bounce'
+        },
+        'info': {
+            bg: 'bg-blue-500',
+            icon: 'ℹ️',
+            animation: 'slide'
+        },
+        'warning': {
+            bg: 'bg-yellow-500',
+            icon: '⚠️',
+            animation: 'pulse'
+        }
     };
     
-    const bgColor = bgColors[type] || bgColors.error;
-    toast.className = `fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${bgColor} text-white`;
-    toastMessage.textContent = message;
+    const style = styles[type] || styles.error;
+    toast.className = `fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 ${style.bg} text-white animate-${style.animation}`;
+    toastMessage.innerHTML = `<span class="mr-2">${style.icon}</span>${message}`;
     
     // 显示提示
     toast.style.opacity = '1';
     toast.style.transform = 'translateX(-50%) translateY(0)';
     
-    // 3秒后自动隐藏
+    // 自定义时间后自动隐藏
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(-50%) translateY(-100%)';
@@ -56,7 +72,7 @@ function showNextToast() {
         setTimeout(() => {
             showNextToast();
         }, 300);
-    }, 3000);
+    }, duration);
 }
 
 // 添加显示/隐藏 loading 的函数
