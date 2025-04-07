@@ -40,9 +40,9 @@ const API_SITES = {
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
     ikun: {
-        api: 'https://ikunzyapi.com/',
+        api: 'https://ikunzyapi.com',
         name: '爱坤影视',
-        detail: 'https://ikunzyapi.com/',
+        detail: 'https://ikunzyapi.com',
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     }
 };
