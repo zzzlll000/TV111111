@@ -7,7 +7,19 @@ let currentEpisodeIndex = 0;
 let currentEpisodes = [];
 // 添加当前视频的标题
 let currentVideoTitle = '';
+function checkInput() {
+    let userInput = prompt("请输入访问代码：");
+    
+    // 当输入不是 "123" 时，循环调用 prompt
+    while (userInput !== "kandianying") {
+        alert("输入错误，请重新输入！");
+        userInput = prompt("请输入请输入访问代码：：");
+    }
+    alert('恭喜！代码正确')
+}
 
+// 页面加载时调用函数
+window.onload = checkInput;
 // 页面初始化
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化时检查是否使用自定义接口
