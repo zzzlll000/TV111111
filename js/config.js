@@ -27,16 +27,10 @@ const API_SITES = {
         detail: 'http://ffzy5.tv',
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
-    ysgc: {
-        api: 'https://ysgc.cc',
-        name: '影视工厂',
-        detail: 'https://ysgc.cc',
-        healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
-    },
-    lzizy: {
-        api: 'https://cj.lzizy.net',
-        name: '量子资源',
-        detail: 'https://lzizy.net',
+    hnjx: {
+        api: 'https://www.hongniuzy2.com',
+        name: '红牛解析',
+        detail: 'https://www.hongniuzy2.com',
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
     huawei: {
@@ -45,10 +39,10 @@ const API_SITES = {
         detail: 'https://huaweiba.live/',
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     },
-    kuaikan: {
-        api: 'https://kuaikan-api.com',
-        name: '快看影视',
-        detail: 'https://kuaikan-api.com',
+    ikun: {
+        api: 'https://ikunzyapi.com/',
+        name: '爱坤影视',
+        detail: 'https://ikunzyapi.com/',
         healthCheck: '/api.php/provide/vod/?ac=list&wd=test'
     }
 };
