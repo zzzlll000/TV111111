@@ -10,7 +10,7 @@ LibreTV是一个轻量级、免费的在线视频搜索与观看平台，提供�
 
 <img src="https://testingcf.jsdelivr.net/gh/bestZwei/imgs@master/picgo/image-20250406231222216.png" alt="image-20250406231222216" style="zoom:67%;" />
 
-> ##### **感谢 [NodeSupport](https://www.nodeseek.com/post-305185-1) 友情赞助**
+**感谢 [NodeSupport](https://www.nodeseek.com/post-305185-1) 友情赞助**
 
 ## ✨ 主要特性
 
