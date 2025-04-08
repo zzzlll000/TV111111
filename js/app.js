@@ -315,7 +315,7 @@ async function showDetails(id, vod_name) {
     }
 }
 
-// 更新播放视频函数，修改为跳转到专门的播放页面
+// 更新播放视频函数，修改为在新标签页中打开播放页面
 function playVideo(url, vod_name, episodeIndex = 0) {
     if (!url) {
         showToast('无效的视频链接', 'error');
@@ -331,8 +331,8 @@ function playVideo(url, vod_name, episodeIndex = 0) {
     // 构建播放页面URL，传递必要参数
     const playerUrl = `player.html?url=${encodeURIComponent(url)}&title=${encodeURIComponent(vod_name)}&index=${episodeIndex}`;
     
-    // 跳转到播放页面
-    window.location.href = playerUrl;
+    // 在新标签页中打开播放页面
+    window.open(playerUrl, '_blank');
 }
 
 // 播放上一集
