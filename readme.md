@@ -51,6 +51,12 @@ LibreTV集成了强大的自定义播放器，具有以下特点：
 - 前端API请求拦截技术
 - localStorage本地存储
 
+## 🚀 一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FbestZwei%2FLibreTV)
+[![Deploy to Cloudflare Pages](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/bestZwei/LibreTV)
+
+
 ## 🚀 部署指南
 
 ### Cloudflare Pages部署
