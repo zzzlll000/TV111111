@@ -49,9 +49,11 @@ const API_CONFIG = {
         }
     },
     detail: {
-        path: '/index.php/vod/detail/id/',
+        // 修改详情接口也使用videolist接口，但是通过ID查询，减少请求次数
+        path: '/api.php/provide/vod/?ac=videolist&ids=',
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept': 'application/json'
         }
     }
 };
