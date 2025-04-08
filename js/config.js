@@ -24,6 +24,51 @@ const API_SITES = {
         api: 'http://ffzy5.tv',
         name: '非凡影视',
         detail: 'http://ffzy5.tv',
+    },        
+    wolong: {
+        api: 'https://wolongzyw.com',
+        name: '卧龙',
+        detail: 'https://wolongzyw.com',
+    },
+    huawei: {
+        api: 'https://huaweiba.live',
+        name: '华为',
+        detail: 'https://huaweiba.live',
+    },
+    ty: {
+        api: 'https://tyyszy.com',
+        name: 'ty',
+        detail: 'https://tyyszy.com',
+    },
+    haohua: {
+        api: 'https://haohuazy.com',
+        name: '豪华',
+        detail: 'https://haohuazy.com',
+    },
+    xinhuawei: {
+        api: 'https://cjhwba.com',
+        name: '新华为',
+        detail: 'https://cjhwba.com',
+    },
+    subo: {
+        api: 'https://www.suboziyuan.net',
+        name: '速播',
+        detail: 'https://www.suboziyuan.net',
+    },
+    douban: {
+        api: 'https://dbzy.com',
+        name: '豆瓣',
+        detail: 'https://dbzy.com',
+    },
+    jinying: {
+        api: 'https://jinyingzy.com',
+        name: '金鹰',
+        detail: 'https://jinyingzy.com',
+    },
+    ck: {
+        api: 'https://www.ckzy1.com',
+        name: 'CK',
+        detail: 'https://www.ckzy1.com',
     },
     
 };
