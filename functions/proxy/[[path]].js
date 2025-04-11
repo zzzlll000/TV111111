@@ -1,5 +1,3 @@
-// functions/proxy/[[path]].js
-
 // --- 配置 (读取自 config.js，这里为了独立运行先定义) ---
 // 注意：在实际Pages Function环境中，我们无法直接 `import config.js`
 // 所以需要将必要的配置硬编码或通过环境变量传入。这里我们硬编码。
