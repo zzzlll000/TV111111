@@ -20,8 +20,8 @@ jobs:
 
       - name: Add upstream remote and fetch
         run: |
-          git remote add upstream https://github.com/bestZwei/LibreTV.git  # 添加 upstream 远程仓库
-          git fetch upstream main  # 拉取 upstream 的 main 分支
+          git remote add upstream https://github.com/bestZwei/LibreTV.git
+          git fetch upstream main
 
       - name: Check for upstream changes
         id: check_changes
@@ -30,6 +30,7 @@ jobs:
             echo "no_changes=true" >> $GITHUB_OUTPUT
           else
             echo "no_changes=false" >> $GITHUB_OUTPUT
+          fi  # 添加这一行来关闭 if 语句
 
       - name: Sync upstream changes only if needed
         if: steps.check_changes.outputs.no_changes != 'true'
