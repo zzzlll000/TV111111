@@ -1,38 +1,40 @@
 name: Optimized Upstream Sync
 
 permissions:
-  contents: write  # 最小权限设置，如果不需要写操作，可以调整
+  contents: write
 
 on:
   schedule:
-    - cron: "0 */2 * * *"  # Every 2 hours, as per your request
+    - cron: "0 */2 * * *"
   workflow_dispatch:
 
 jobs:
   sync_latest_from_upstream:
     name: Sync latest commits from upstream repo
-    runs-on: ubuntu-22.04  # 指定版本以提高一致性
-    if: ${{ github.event.repository.fork }}  # 仅在 Fork 仓库时运行
+    runs-on: ubuntu-22.04
+    if: ${{ github.event.repository.fork }}
 
     steps:
       - name: Checkout target repo
-        uses: actions/checkout@v4  # 更新到最新版本，如果可用
+        uses: actions/checkout@v4
+
+      - name: Add upstream remote and fetch
+        run: |
+          git remote add upstream https://github.com/bestZwei/LibreTV.git  # 添加 upstream 远程仓库
+          git fetch upstream main  # 拉取 upstream 的 main 分支
 
       - name: Check for upstream changes
         id: check_changes
         run: |
-          git fetch upstream main  # 假设 upstream 已配置
           if [ $(git rev-list --count HEAD..upstream/main) -eq 0 ]; then
             echo "no_changes=true" >> $GITHUB_OUTPUT
           else
             echo "no_changes=false" >> $GITHUB_OUTPUT
-        env:
-          upstream: bestZwei/LibreTV  # 可以用 secrets 替换为动态值
 
       - name: Sync upstream changes only if needed
         if: steps.check_changes.outputs.no_changes != 'true'
         id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4  # 更新到最新版本
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
           upstream_sync_repo: bestZwei/LibreTV
           upstream_sync_branch: main
@@ -41,16 +43,15 @@ jobs:
           test_mode: false
 
       - name: Log sync results
-        if: always()  # 总是运行，记录日志
+        if: always()
         run: |
           echo "Sync attempt completed. Changes detected: ${{ steps.check_changes.outputs.no_changes != 'true' }}"
 
       - name: Notify on failure
         if: failure()
-        uses: peter-evans/create-issue-from-file@v4  # 添加通知 Actions
+        uses: peter-evans/create-issue-from-file@v4
         with:
           title: "Upstream Sync Failed"
           body: |
             The upstream sync workflow has failed. Please review the logs.
-            Details: Due to a change in the upstream repository, manual intervention may be needed.
           labels: "bug, sync-issue"
