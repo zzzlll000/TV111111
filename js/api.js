@@ -207,6 +207,7 @@ async function handleApiRequest(url) {
 }
 
 // 处理极速资源详情的特殊函数 - 类似非凡影视的处理方式
+
 async function handleJisuDetail(id, sourceCode) {
     // 直接复用通用的特殊源处理函数，传入相应参数
     return await handleSpecialSourceDetail(id, sourceCode);
@@ -219,6 +220,7 @@ async function handleFFZYDetail(id, sourceCode) {
 }
 
 //  通用特殊源详情处理函数
+
 async function handleSpecialSourceDetail(id, sourceCode) {
     try {
         // 构建详情页URL（使用配置中的detail URL而不是api URL）
