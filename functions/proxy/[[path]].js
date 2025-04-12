@@ -9,7 +9,7 @@
 // DEBUG (例如 false 或 true)
 // --- 配置结束 ---
 
-// --- 常量 (之前在 config.js 中，现在移到这里或保持不变，因为它们与代理逻辑相关) ---
+// --- 常量 (之前在 config.js 中，现在移到这里，因为它们与代理逻辑相关) ---
 const MEDIA_FILE_EXTENSIONS = [
     '.mp4', '.webm', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.f4v', '.m4v', '.3gp', '.3g2', '.ts', '.mts', '.m2ts',
     '.mp3', '.wav', '.ogg', '.aac', '.m4a', '.flac', '.wma', '.alac', '.aiff', '.opus',
@@ -32,7 +32,6 @@ export async function onRequest(context) {
     const CACHE_TTL = parseInt(env.CACHE_TTL || '86400'); // 默认 24 小时
     const MAX_RECURSION = parseInt(env.MAX_RECURSION || '5'); // 默认 5 层
     // 广告过滤已移至播放器处理，代理不再执行
-    const FILTER_DISCONTINUITY = false; // 硬编码为 false
     let USER_AGENTS = [ // 提供一个基础的默认值
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     ];
@@ -53,7 +52,7 @@ export async function onRequest(context) {
     // --- 配置读取结束 ---
 
 
-    // --- 辅助函数 (大部分从 workers1.js 适配过来) ---
+    // --- 辅助函数 ---
 
     // 输出调试日志 (需要设置 DEBUG: true 环境变量)
     function logDebug(message) {
@@ -269,12 +268,6 @@ export async function onRequest(context) {
                 continue;
             }
             if (!line) continue; // 跳过中间的空行
-
-            // #EXT-X-DISCONTINUITY 过滤已禁用 (FILTER_DISCONTINUITY = false)
-            // if (FILTER_DISCONTINUITY && line === '#EXT-X-DISCONTINUITY') {
-            //     logDebug(`过滤 Discontinuity 标记: ${url}`);
-            //     continue;
-            // }
 
             if (line.startsWith('#EXT-X-KEY')) {
                 output.push(processKeyLine(line, baseUrl));
