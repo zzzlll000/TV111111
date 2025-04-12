@@ -1,15 +1,15 @@
 // 全局常量配置
 
-const PROXY_URL = 'https://cors.zme.ink/';
+const PROXY_URL = 'https://free.133433.xyz/';
 const HOPLAYER_URL = 'https://hoplayer.com/index.html';
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
 
 // 网站信息配置
 const SITE_CONFIG = {
-    name: 'LibreTV',
-    url: 'https://libretv.is-an.org',
-    description: '免费在线视频搜索与观看平台',
+    name: 'X',
+    url: '',
+    description: '',
     logo: 'https://images.icon-icons.com/38/PNG/512/retrotv_5520.png',
     version: '1.0.0'
 };
