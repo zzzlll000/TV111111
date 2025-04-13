@@ -943,5 +943,70 @@
             dp.seek(clickTime);
         }
     </script>
+    
+    <script>
+        // 添加触摸事件支持，确保移动全屏时体验流畅
+        (function() {
+            const playerContainer = document.getElementById('player');
+            if (!playerContainer) return;
+            let touchStartX = 0, touchStartY = 0, longPressTimeout = null;
+
+            playerContainer.addEventListener('touchstart', function(e) {
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                // 设置长按检测，触发倍速调节
+                longPressTimeout = setTimeout(() => {
+                    // 切换播放速度（示例：在 normal 与 1.5 倍之间切换）
+                    if (dp && dp.video) {
+                        dp.video.playbackRate = dp.video.playbackRate === 1 ? 1.5 : 1;
+                        showToast(`倍速调整为：${dp.video.playbackRate}x`, 'info');
+                    }
+                }, 800);
+            });
+
+            playerContainer.addEventListener('touchmove', function(e) {
+                clearTimeout(longPressTimeout);
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                const screenWidth = window.innerWidth;
+                // 左半边屏幕：调节亮度（使用 body filter 模拟调节）
+                if (touchStartX < screenWidth / 2) {
+                    let brightness = parseFloat(document.body.getAttribute('data-brightness')) || 1;
+                    brightness -= deltaY / 500; // 调整因子，可根据体验调整
+                    brightness = Math.min(Math.max(brightness, 0.5), 1.5);
+                    document.body.style.filter = `brightness(${brightness})`;
+                    document.body.setAttribute('data-brightness', brightness);
+                }
+                // 右半边屏幕：调节音量
+                else {
+                    if (dp && dp.video) {
+                        let volume = dp.video.volume;
+                        volume -= deltaY / 500;
+                        volume = Math.min(Math.max(volume, 0), 1);
+                        dp.video.volume = volume;
+                        showToast(`音量：${Math.round(volume * 100)}%`, 'info');
+                    }
+                }
+                // 水平较大滑动：右滑触发快进（优先水平滑动效果）
+                if (Math.abs(deltaX) > 100 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (deltaX > 0 && dp && dp.video) {
+                        // 快进10秒
+                        const newTime = Math.min(dp.video.currentTime + 10, dp.video.duration);
+                        dp.seek(newTime);
+                        showToast('快进10秒', 'info');
+                        // 重置初始点，避免重复触发
+                        touchStartX = touch.clientX;
+                        touchStartY = touch.clientY;
+                    }
+                }
+            });
+
+            playerContainer.addEventListener('touchend', function(e) {
+                clearTimeout(longPressTimeout);
+            });
+        })();
+    </script>
 </body>
 </html>
