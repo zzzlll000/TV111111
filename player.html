@@ -301,7 +301,15 @@
             // 设置页面标题
             document.title = currentVideoTitle + ' - 播放器';
             document.getElementById('videoTitle').textContent = currentVideoTitle;
-            
+
+
+
+           introSkipTime = parseFloat(localStorage.getItem('introSkipTime') || 90);
+           outroSkipTime = parseFloat(localStorage.getItem('outroSkipTime') || 30);
+            console.log('加载设置：片头时间 = ' + introSkipTime + '秒，片尾时间 = ' + outroSkipTime + '秒');
+            document.getElementById('introInput').value = introSkipTime;
+            document.getElementById('outroInput').value = outroSkipTime;
+
             // 初始化播放器
             if (videoUrl) {
                 initPlayer(videoUrl);
@@ -329,11 +337,6 @@
             // 添加键盘快捷键事件监听
             document.addEventListener('keydown', handleKeyboardShortcuts);
 
-           introSkipTime = parseFloat(localStorage.getItem('introSkipTime') || 90);
-           outroSkipTime = parseFloat(localStorage.getItem('outroSkipTime') || 30);
-            
-            document.getElementById('introInput').value = introSkipTime;
-            document.getElementById('outroInput').value = outroSkipTime;
         });
 
         // 处理键盘快捷键
@@ -648,9 +651,11 @@
                 if (dp.video && dp.duration > 0) {
                     const currentTime = dp.video.currentTime;
                     const duration = dp.video.duration;
+                    console.log('timeupdate 事件触发：当前时间 = ' + currentTime + '秒，总时长 = ' + duration + '秒');  // 调试日志
                     
                     // 新增：跳过片头逻辑
                     if (currentTime >= introSkipTime && !skippedIntro) {
+                        console.log('检测到片头结束，跳转到 ' + (introSkipTime + 1) + ' 秒');  // 调试日志
                         dp.seek(introSkipTime + 1);  // 跳转到片头结束后的1秒
                         skippedIntro = true;
                         showShortcutHint('已跳过片头', 'right');
@@ -658,6 +663,7 @@
                     
                     // 新增：跳过片尾逻辑
                     if (duration - currentTime <= outroSkipTime && !skippedOutro && currentTime < duration - 1) {
+                        console.log('检测到片尾开始，跳转到 ' + (duration - outroSkipTime + 1) + ' 秒');  // 调试日志
                         dp.seek(duration - outroSkipTime + 1);  // 跳转到片尾前的位置
                         skippedOutro = true;
                         showShortcutHint('已跳过片尾', 'right');
@@ -667,6 +673,7 @@
                     if (currentTime < 1) {
                         skippedIntro = false;
                         skippedOutro = false;
+                        console.log('视频重新开始，重置跳过标记');  // 调试日志
                     }
                     // 如果视频接近结尾但不是自然播放到结尾，重置自然结束标志
                     if (isUserSeeking && dp.video.currentTime > dp.video.duration * 0.95) {
@@ -990,10 +997,24 @@
         }
 
         function saveSkipTimes() {
-            introSkipTime = parseFloat(document.getElementById('introInput').value) || 0;
-            outroSkipTime = parseFloat(document.getElementById('outroInput').value) || 0;
+            const introValue = parseFloat(document.getElementById('introInput').value) || 0;
+            const outroValue = parseFloat(document.getElementById('outroInput').value) || 0;
+            
+            if (isNaN(introValue) || introValue < 0) {
+                alert('片头时间无效，请输入非负数');  // 错误处理
+                return;
+            }
+            if (isNaN(outroValue) || outroValue < 0) {
+                alert('片尾时间无效，请输入非负数');  // 错误处理
+                return;
+            }
+            
+            introSkipTime = introValue;
+            outroSkipTime = outroValue;
             localStorage.setItem('introSkipTime', introSkipTime);
             localStorage.setItem('outroSkipTime', outroSkipTime);
+            
+            console.log('保存设置：片头时间 = ' + introSkipTime + '秒，片尾时间 = ' + outroSkipTime + '秒');  // 调试日志
             showShortcutHint('设置已保存', 'right');  // 使用现有函数显示提示
         }
 
