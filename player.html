@@ -261,8 +261,8 @@
         let adFilteringEnabled = true; // 默认开启广告过滤
         let introSkipTime = 90; // 默认片头跳过时间，单位：秒
         let outroSkipTime = 30; // 默认片尾跳过时间，单位：秒
-        let skippedIntro = true; // 标记是否已跳过片头
-        let skippedOutro = true; // 标记是否已跳过片尾
+        let skippedIntro = false; // 标记是否已跳过片头
+        let skippedOutro = false; // 标记是否已跳过片尾
 
         // 页面加载
         document.addEventListener('DOMContentLoaded', function() {
@@ -403,10 +403,10 @@
                 enableWorker: true,
                 lowLatencyMode: false,
                 backBufferLength: 90,
-                maxBufferLength: 30,
-                maxMaxBufferLength: 60,
-                maxBufferSize: 30 * 1000 * 1000,
-                maxBufferHole: 0.5,
+                maxBufferLength: 60,
+                maxMaxBufferLength: 120,
+                maxBufferSize: 60 * 1000 * 1000,
+                maxBufferHole: 1,
                 fragLoadingMaxRetry: 6,
                 fragLoadingMaxRetryTimeout: 64000,
                 fragLoadingRetryDelay: 1000,
@@ -652,23 +652,30 @@
                     const currentTime = dp.video.currentTime;
                     const duration = dp.video.duration;
                     console.log('timeupdate 事件触发：当前时间 = ' + currentTime + '秒，总时长 = ' + duration + '秒');  // 调试日志
-                    
+
                     // 新增：跳过片头逻辑
                     if (currentTime >= introSkipTime && !skippedIntro) {
-                        console.log('检测到片头结束，跳转到 ' + (introSkipTime + 1) + ' 秒');  // 调试日志
-                        dp.seek(introSkipTime + 1);  // 跳转到片头结束后的1秒
-                        skippedIntro = true;
-                        showShortcutHint('已跳过片头', 'right');
+                        if (!dp.video.paused) {  // 确保视频未暂停
+                            console.log('检测到片头结束，跳转到 ' + (introSkipTime + 1) + ' 秒');
+                            dp.seek(introSkipTime + 1);
+                            skippedIntro = true;
+                            showShortcutHint('已跳过片头', 'right');
+                        } else {
+                            console.log('视频暂停，跳过片头延迟');  // 调试日志
+                        }
                     }
                     
                     // 新增：跳过片尾逻辑
                     if (duration - currentTime <= outroSkipTime && !skippedOutro && currentTime < duration - 1) {
-                        console.log('检测到片尾开始，跳转到 ' + (duration - outroSkipTime + 1) + ' 秒');  // 调试日志
-                        dp.seek(duration - outroSkipTime + 1);  // 跳转到片尾前的位置
-                        skippedOutro = true;
-                        showShortcutHint('已跳过片尾', 'right');
+                        if (!dp.video.paused) {
+                            console.log('检测到片尾开始，跳转到 ' + (duration - outroSkipTime + 1) + ' 秒');
+                            dp.seek(duration - outroSkipTime + 1);
+                            skippedOutro = true;
+                            showShortcutHint('已跳过片尾', 'right');
+                        } else {
+                            console.log('视频暂停，跳过片尾延迟');
+                        }
                     }
-                    
                     // 新增：重置标记，如果视频重新开始
                     if (currentTime < 1) {
                         skippedIntro = false;
