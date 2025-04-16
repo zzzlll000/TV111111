@@ -6,7 +6,7 @@ LibreTV是一个轻量级、免费的在线视频搜索与观看平台，提供�
 
 本项目基于 https://github.com/bestK/tv
 
-演示站：https://libretv.is-an.org/
+演示站：(请自行部署，不再提供演示站)
 
 <img src="https://testingcf.jsdelivr.net/gh/bestZwei/imgs@master/picgo/image-20250406231222216.png" alt="image-20250406231222216" style="zoom:67%;" />
 
@@ -59,9 +59,7 @@ LibreTV播放器支持以下键盘快捷键：
 
 ## 🚀 一键部署
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FbestZwei%2FLibreTV)
-
-[![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy%20to-Cloudflare%20Pages-blue?style=for-the-badge&logo=cloudflare)](https://dash.cloudflare.com/)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLibreSpark%2FLibreTV)
 
 ## 🚀 部署指南
 
@@ -130,7 +128,7 @@ services:
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=bestZwei/LibreTV&type=Date)](https://www.star-history.com/#bestZwei/LibreTV&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=LibreSpark/LibreTV&type=Date)](https://www.star-history.com/#LibreSpark/LibreTV&Date)
 
 ## ⚠️ 免责声明
 
