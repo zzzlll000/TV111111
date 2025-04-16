@@ -1,6 +1,6 @@
 // 全局常量配置
 
-const PROXY_URL = 'https://seep.eu.org/';
+const PROXY_URL = 'https://cdn.tailwindcss.com';
 const HOPLAYER_URL = 'https://hoplayer.com/index.html';
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
