@@ -44,8 +44,8 @@ const API_SITES = {
         name: '卧龙资源',
     },
     cjhw: {
-        api: 'https://cjhwba.com',
-        name: '新华为',
+        api: 'https://http://www.饭太硬.com/tv',
+        name: '玩偶',
     },
     hwba: {
         api: 'https://cjwba.com',
