@@ -1,6 +1,6 @@
 // 全局常量配置
 
-const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
+const PROXY_URL = 'https://free.133433.xyz';
 // https://api.codetabs.com/v1/proxy?quest=
 // https://crossorigin.me/
 // https://cors-proxy.htmldriven.com/?url=
