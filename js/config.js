@@ -1,6 +1,6 @@
 // 全局常量配置
 
-const PROXY_URL = 'https://free.133433.xyz/';
+const PROXY_URL = 'https://api.codetabs.com/v1/proxy?quest=';
 const HOPLAYER_URL = 'https://hoplayer.com/index.html';
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
