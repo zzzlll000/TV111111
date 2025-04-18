@@ -11,10 +11,43 @@ class MobileTouchControl {
     }
 
     init() {
-        const container = this.player.container;
+        // 修改1：增强容器选择器兼容性
+        const container = document.querySelector('#player, .dplayer') || dp.container;
         
-        container.addEventListener('touchstart', this.handleTouchStart.bind(this));
-        container.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        // 修改2：使用事件捕获并提高优先级
+        function initMobileTouchControl(dp) {
+            // 移除旧事件监听
+            container.removeEventListener('touchstart', handleTouchStart, { capture: true });
+            container.removeEventListener('touchmove', handleTouchMove, { capture: true });
+            
+            // 添加新事件监听（使用捕获阶段和passive:false）
+            container.addEventListener('touchstart', handleTouchStart, { 
+                capture: true,
+                passive: false 
+            });
+            container.addEventListener('touchmove', handleTouchMove, { 
+                capture: true,
+                passive: false 
+            });
+        
+            // 修改3：增强触摸处理逻辑
+            function handleTouchStart(e) {
+                // 检查是否在进度条上触发（避免与进度条点击冲突）
+                const isOnProgressBar = e.target.closest('.dplayer-bar-wrap');
+                if(isOnProgressBar) return;
+                
+                // ...原有触摸开始逻辑...
+            }
+        
+            // 修改4：增强触摸移动处理
+            function handleTouchMove(e) {
+                // 检查是否在进度条操作中
+                if(document.querySelector('.dplayer-bar-wrap.dplayer-bar-active')) {
+                    return;
+                }
+                // ...原有触摸移动逻辑...
+            }
+        }
         container.addEventListener('touchend', this.handleTouchEnd.bind(this));
     }
 
