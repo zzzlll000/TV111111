@@ -1,3 +1,4 @@
+config.js  第三方跨域https://seep.eu.org/   https://cors.zme.ink/  https://api.allorigins.win/raw?url=
 player.html   增加mobile-touch-control.js  实现长按加速
     <script src="https://s4.zstatic.net/ajax/libs/hls.js/1.5.6/hls.min.js" integrity="sha256-X1GmLMzVcTBRiGjEau+gxGpjRK96atNczcLBg5w6hKA=" crossorigin="anonymous"></script>
     <script src="https://s4.zstatic.net/ajax/libs/dplayer/1.26.0/DPlayer.min.js" integrity="sha256-OJg03lDZP0NAcl3waC9OT5jEa8XZ8SM2n081Ik953o4=" crossorigin="anonymous"></script>
