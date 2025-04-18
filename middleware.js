@@ -24,9 +24,16 @@ export default async function middleware(request) {
   // Replace the placeholder with actual environment variable
   // If PASSWORD is not set, replace with empty string
   const password = process.env.PASSWORD || '';
-  const modifiedHtml = originalHtml.replace(
+  let modifiedHtml = originalHtml.replace(
     'window.__ENV__.PASSWORD = "{{PASSWORD}}";',
     `window.__ENV__.PASSWORD = "${password}";`
+  );
+  
+  // Inject PROXY_URL, default fallback to /proxy/
+  const proxyUrl = process.env.PROXY_URL || '/proxy/';
+  modifiedHtml = modifiedHtml.replace(
+    'window.__ENV__.PROXY_URL = "{{PROXY_URL}}";',
+    `window.__ENV__.PROXY_URL = "${proxyUrl}";`
   );
   
   // Create a new response with the modified HTML

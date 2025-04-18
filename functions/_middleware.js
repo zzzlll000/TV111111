@@ -18,6 +18,13 @@ export async function onRequest(context) {
     html = html.replace('window.__ENV__.PASSWORD = "{{PASSWORD}}";', 
                         `window.__ENV__.PASSWORD = "${password}";`);
     
+    // Inject PROXY_URL, default fallback to /proxy/
+    const proxyUrl = env.PROXY_URL || "/proxy/";
+    html = html.replace(
+      'window.__ENV__.PROXY_URL = "{{PROXY_URL}}";',
+      `window.__ENV__.PROXY_URL = "${proxyUrl}";`
+    );
+    
     // Create a new response with the modified HTML
     return new Response(html, {
       headers: response.headers,
