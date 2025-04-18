@@ -256,14 +256,7 @@
                     </svg>
                     <span id="orderText">倒序排列</span>
                 </button>
-                <button id="lockToggle" onclick="toggleControlsLock()" title="锁定控制" 
-                        class="px-2 py-1 bg-[#333] hover:bg-[#444] text-white rounded-full transition">
-                    <svg id="lockIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <!-- 默认状态：未锁图标 -->
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M15 11V7a3 3 0 00-6 0v4m-3 4h12v6H6v-6z" />
-                    </svg>
-                </button>
+                
             </div>
         </div>
 
@@ -1423,17 +1416,6 @@
             }, 10);
         }
 
-        let controlsLocked = false;
-        function toggleControlsLock() {
-            const container = document.getElementById('playerContainer');
-            controlsLocked = !controlsLocked;
-            container.classList.toggle('controls-locked', controlsLocked);
-            const icon = document.getElementById('lockIcon');
-            // 切换图标：锁 / 解锁
-            icon.innerHTML = controlsLocked
-                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d=\"M12 15v2m0-8V7a4 4 0 00-8 0v2m8 0H4v8h16v-8h-4z\"/>'
-                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d=\"M15 11V7a3 3 0 00-6 0v4m-3 4h12v6H6v-6z\"/>';
-        }
     </script>
 </body>
 </html>
