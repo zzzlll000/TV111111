@@ -9,8 +9,12 @@ services:
       - "8899:80"
     environment:
       - PASSWORD=111111  # 设置密码保护，留空则不启用密码
-      # 可以添加其他环境变量
+      - PROXY_URL=https://api.codetabs.com/v1/proxy?quest=  # Docker部署时使用第三方CORS代理
+      # 如需切换代理可改为其他备选
+      # - PROXY_URL=https://crossorigin.me/
+      # - PROXY_URL=https://cors-proxy.htmldriven.com/?url=
+      # - PROXY_URL=https://api.allorigins.win/get?url=
     restart: unless-stopped
-    # 如果您想使用外部卷存储数据
+    # 如需挂载数据目录可取消注释
     # volumes:
     #   - ./data:/usr/share/nginx/html/data
