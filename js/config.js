@@ -50,7 +50,12 @@ const API_SITES = {
         api: 'https://www.77kkpp.com',
         name: '七七看片',
     },
-	mozhua: {
+    heimuer: {
+        api: 'https://json.heimuer.xyz',
+        name: '黑木耳',
+        detail: 'https://heimuer.tv'
+    },
+    mozhua: {
         api: 'https://mozhuazy.com',
         name: '魔爪资源',
     },
@@ -88,11 +93,6 @@ const API_SITES = {
         detail: 'https://jszyapi.com'
     },
 
-    heimuer: {
-        api: 'https://json.heimuer.xyz',
-        name: '黑木耳',
-        detail: 'https://heimuer.tv'
-    },
     yayazy: {
         api: 'https://cj.yayazy.net',
         name: '鸭鸭资源',
