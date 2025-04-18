@@ -11,41 +11,21 @@ class MobileTouchControl {
     }
 
     init() {
-        // 增强容器选择器兼容性（同时匹配player2.html的#playerContainer和默认的.dplayer）
-        const container = document.querySelector('#playerContainer, .dplayer, #player') || this.player.container;
+        const container = this.player.container;
         
-        // 移除可能存在的旧事件监听
-        container.removeEventListener('touchstart', this.handleTouchStart.bind(this));
-        container.removeEventListener('touchmove', this.handleTouchMove.bind(this));
-        container.removeEventListener('touchend', this.handleTouchEnd.bind(this));
-        
-        // 添加新事件监听（使用捕获阶段和passive:false提高优先级）
-        container.addEventListener('touchstart', this.handleTouchStart.bind(this), {
-            capture: true,
-            passive: false
-        });
-        container.addEventListener('touchmove', this.handleTouchMove.bind(this), {
-            capture: true,
-            passive: false
-        });
-        container.addEventListener('touchend', this.handleTouchEnd.bind(this), {
-            capture: true
-        });
+        container.addEventListener('touchstart', this.handleTouchStart.bind(this));
+        container.addEventListener('touchmove', this.handleTouchMove.bind(this));
+        container.addEventListener('touchend', this.handleTouchEnd.bind(this));
     }
 
     handleTouchStart(e) {
-        // 新增：检查是否在进度条上操作（避免与player2.html的进度条点击冲突）
-        if (e.target.closest('.dplayer-bar-wrap') || 
-            document.querySelector('.dplayer-bar-wrap.dplayer-bar-active')) {
-            return;
-        }
-
         if (!this.player.video) return;
         
         this.touchStartX = e.touches[0].clientX;
         this.touchStartTime = Date.now();
         this.isLongPress = false;
         
+        // 长按加速逻辑
         this.longPressTimer = setTimeout(() => {
             this.isLongPress = true;
             this.originalPlaybackRate = this.player.video.playbackRate;
