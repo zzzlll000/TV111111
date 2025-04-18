@@ -5,6 +5,13 @@ player.html   增加mobile-touch-control.js  实现长按加速
     <script src="https://s4.zstatic.net/ajax/libs/dplayer/1.26.0/DPlayer.min.js" integrity="sha256-OJg03lDZP0NAcl3waC9OT5jEa8XZ8SM2n081Ik953o4=" crossorigin="anonymous"></script>
     <script src="js/mobile-touch-control.js"></script>
     <script src="js/config.js"></script>
+    
+                // 添加移动端触摸控制
+            if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                initMobileTouchControl(dp);
+            }
+            // 全屏模式下锁定横屏
+            
 player.html   增加css样式 长按和屏蔽右键提示以及移动端优化
     /* 添加移动端触摸提示样式 */
         .mobile-touch-hint {
