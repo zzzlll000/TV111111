@@ -55,12 +55,12 @@ class MobileTouchControl {
     handleTouchEnd() {
         clearTimeout(this.longPressTimer);
         
-        if (this.isLongPress && this.player.video) {
-            // 恢复原始播放速度
+        // 无论是否是长按，都尝试恢复播放速度
+        if (this.player.video && this.player.video.playbackRate !== this.originalPlaybackRate) {
             this.player.video.playbackRate = this.originalPlaybackRate;
             this.showHint('恢复正常速度');
-            this.isLongPress = false;
         }
+        this.isLongPress = false; // 确保状态被重置
     }
 
     showHint(text) {
