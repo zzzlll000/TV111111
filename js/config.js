@@ -146,11 +146,6 @@ const API_SITES = {
         name: 'souav资源',
         adult: true
     },
-    siwa: {
-        api: 'https://siwazyw.tv',
-        name: '丝袜资源',
-        adult: true
-    },
     r155: {
         api: 'https://155api.com',
         name: '155资源',
@@ -166,6 +161,11 @@ const API_SITES = {
         name: '黄色仓库',
         adult: true,
         detail: 'https://hsckzy.vip' // 添加detail URL以便特殊处理
+    },
+    siwa: {
+        api: 'https://siwazyw.tv',
+        name: '丝袜资源',
+        adult: true
     }
 };
 
