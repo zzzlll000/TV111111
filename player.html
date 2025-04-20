@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>奇异TV 播放器</title>
+    <title>LibreTV 播放器</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/styles.css">
     <style>
@@ -15,7 +15,7 @@
             background-color: #0f1622;
             color: white;
         }
-        。player-container {
+        .player-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -24,7 +24,7 @@
             width: 100%;
             height: 60vh; /* 视频播放器高度 */
         }
-        。loading-container {
+        .loading-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -162,7 +162,7 @@
                 <svg class="w-8 h-8 mr-2 text-[#00ccff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                 </svg>
-                <h1 class="text-xl font-bold gradient-text">奇异TV</h1>
+                <h1 class="text-xl font-bold gradient-text">LibreTV</h1>
             </a>
         </div>
         <h2 id="videoTitle" class="text-xl font-semibold truncate flex-1 text-center"></h2>
@@ -337,7 +337,7 @@
             }
 
             // 设置页面标题
-            document.title = currentVideoTitle + ' - 奇异TV播放器';
+            document.title = currentVideoTitle + ' - LibreTV播放器';
             document.getElementById('videoTitle').textContent = currentVideoTitle;
             
             // 初始化播放器
@@ -515,7 +515,7 @@
                 chromecast: true,                // 启用Chromecast投屏功能
                 contextmenu: [                   // 自定义右键菜单
                     {
-                        text: '关于 奇异TV',
+                        text: '关于 LibreTV',
                         link: 'https://github.com/bestzwei/LibreTV'
                     },
                     {
@@ -528,7 +528,7 @@
                 video: {
                     url: videoUrl,
                     type: 'hls',
-                    pic: '', // 设置视频封面图
+                    pic: 'https://img.picgo.net/2025/04/12/image362e7d38b4af4a74.png', // 设置视频封面图
                     customType: {
                         hls: function(video, player) {
                             // 清理之前的HLS实例
