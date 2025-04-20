@@ -1,22 +1,6 @@
 // 全局常量配置
-
-// 支持多种 CORS 代理备选
-const DEFAULT_PROXY_URLS = [
-    "/proxy/", // 非Docker/Serverless环境默认本地代理
-    // 备选第三方代理（仅Docker部署时注入）
-    // "https://api.codetabs.com/v1/proxy?quest=",
-    // "https://crossorigin.me/",
-    // "https://cors-proxy.htmldriven.com/?url=",
-    // "http://alloworigin.com/get?url=",
-    // "https://api.allorigins.win/get?url="
-];
-
-// 允许通过 window.__ENV__.PROXY_URL 注入（Docker 部署时建议注入）
-let PROXY_URL = (window.__ENV__ && window.__ENV__.PROXY_URL) || DEFAULT_PROXY_URLS[0];
-
-// 支持多备选代理时可扩展为数组
-let PROXY_URLS = (window.__ENV__ && window.__ENV__.PROXY_URLS) || DEFAULT_PROXY_URLS;
-
+const PROXY_URL = '/proxy/';    // 适用于 Cloudflare, Netlify (带重写), Vercel (带重写)
+// const HOPLAYER_URL = 'https://hoplayer.com/index.html';
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
 
@@ -37,39 +21,53 @@ const SITE_CONFIG = {
 
 // API站点配置
 const API_SITES = {
-    ruyi: {
-        api: 'https://cj.rycjapi.com',
-        name: '如意资源',
-    },
-    cjhw: {
-        api: 'https://cjhwba.com',
-        name: '新华为',
+    heimuer: {
+        api: 'https://json.heimuer.xyz',
+        name: '黑木耳',
+        detail: 'https://heimuer.tv'
     },
     ffzy: {
         api: 'http://ffzy5.tv',
         name: '非凡影视',
         detail: 'http://ffzy5.tv'
     },
-    dbzy: {
-        api: 'https://caiji.dbzy5.com',
-        name: '豆瓣资源',
+    tyyszy: {
+        api: 'https://tyyszy.com',
+        name: '天涯资源',
     },
-    lzzy: {
-        api: 'https://cj.lziapi.com',
-        name: '量子资源',
+    ckzy: {
+        api: 'https://www.ckzy1.com',
+        name: 'CK资源',
+        adult: true
+    },
+    zy360: {
+        api: 'https://360zy.com',
+        name: '360资源',
+    },
+    wolong: {
+        api: 'https://wolongzyw.com',
+        name: '卧龙资源',
+    },
+    cjhw: {
+        api: 'https://cjhwba.com',
+        name: '新华为',
+    },
+    hwba: {
+        api: 'https://cjwba.com',
+        name: '华为吧资源',
+    },
+    jisu: {
+        api: 'https://jszyapi.com',
+        name: '极速资源',
+        detail: 'https://jszyapi.com'
+    },
+    dbzy: {
+        api: 'https://dbzy.com',
+        name: '豆瓣资源',
     },
     bfzy: {
         api: 'https://bfzyapi.com',
         name: '暴风资源',
-    },
-    qiqikp: {
-        api: 'https://www.77kkpp.com',
-        name: '七七看片',
-    },
-    heimuer: {
-        api: 'https://json.heimuer.xyz',
-        name: '黑木耳',
-        detail: 'https://heimuer.tv'
     },
     mozhua: {
         api: 'https://mozhuazy.com',
@@ -79,57 +77,9 @@ const API_SITES = {
         api: 'https://www.mdzyapi.com',
         name: '魔都资源',
     },
-    wolong: {
-        api: 'https://collect.wolongzy.cc',
-        name: '卧龙资源',
-    },
-    tyyszy: {
-        api: 'https://tyyszyapi.com',
-        name: '天涯资源',
-    },
-    ikunzy: {
-        api: 'https://ikunzyapi.com',
-        name: 'iKun资源',
-    },
-    zy360: {
-        api: 'https://360zy.com',
-        name: '360资源',
-    },
-    wujin: {
-        api: 'https://api.wujinapi.me',
-        name: '无尽资源',
-    },
-    zuida: {
-        api: 'https://api.zuidapi.com',
-        name: '最大资源',
-    },
-    jisu: {
-        api: 'https://jszyapi.com',
-        name: '极速资源',
-        detail: 'https://jszyapi.com'
-    },
-
-    yayazy: {
-        api: 'https://cj.yayazy.net',
-        name: '鸭鸭资源',
-    },
-    suoni: {
-        api: 'https://suoniapi.com',
-        name: '索尼资源',
-    },
-
-
-
-
-    yutuzy: {
-        api: 'https://yutuzy10.com',
-        name: '玉兔资源',
-        adult: true
-    },	
-    ckzy: {
-        api: 'https://www.ckzy1.com',
-        name: 'CK资源',
-        adult: true
+    ruyi: {
+        api: 'https://cj.rycjapi.com',
+        name: '如意资源',
     },
     jkun: {
         api: 'https://jkunzyapi.com',
@@ -146,6 +96,11 @@ const API_SITES = {
         name: 'souav资源',
         adult: true
     },
+    siwa: {
+        api: 'https://siwazyw.tv',
+        name: '丝袜资源',
+        adult: true
+    },
     r155: {
         api: 'https://155api.com',
         name: '155资源',
@@ -160,13 +115,22 @@ const API_SITES = {
         api: 'https://hsckzy.vip',
         name: '黄色仓库',
         adult: true,
-        detail: 'https://hsckzy.vip' // 添加detail URL以便特殊处理
+        detail: 'https://hsckzy.vip'
     },
-    siwa: {
-        api: 'https://siwazyw.tv',
-        name: '丝袜资源',
+    zuid: {
+        api: 'https://api.zuidapi.com',
+        name: '最大资源'
+    },
+    suoni: {
+        api: 'https://suoniapi.com',
+        name: '索尼资源'
+    },
+    yutu: {
+        api: 'https://yutuzy10.com',
+        name: '玉兔资源',
         adult: true
     }
+    // 您可以按需添加更多源
 };
 
 // 添加聚合搜索的配置选项
