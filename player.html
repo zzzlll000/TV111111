@@ -409,7 +409,7 @@
 
             // 添加对进度条的监听，确保点击准确跳转
             setTimeout(() => {
-                setupProgressBarPreciseClicks();
+                //setupProgressBarPreciseClicks();
             }, 1000);
 
             // 添加键盘快捷键事件监听
@@ -729,7 +729,7 @@
                 videoHasEnded = false; // 视频加载时重置结束标志
                 
                 // 视频加载完成后重新设置进度条点击监听
-                setupProgressBarPreciseClicks();
+                //setupProgressBarPreciseClicks();
                 
                 // 视频加载成功后，在稍微延迟后将其添加到观看历史
                 setTimeout(saveToHistory, 3000);
