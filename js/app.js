@@ -771,6 +771,8 @@ async function search() {
     } finally {
         hideLoading();
     }
+    const doubanContainer = document.getElementById("douban-results");
+    if (doubanContainer) doubanContainer.style.display = "none";
 }
 
 // 显示详情 - 修改为支持自定义API
