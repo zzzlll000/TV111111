@@ -1,5 +1,5 @@
 // 全局变量
-let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["heimuer"]'); // 默认选中黑木耳
+let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["heimuer", "dbzy"]'); // 默认选中黑木耳和豆瓣资源
 let customAPIs = JSON.parse(localStorage.getItem('customAPIs') || '[]'); // 存储自定义API列表
 
 // 添加当前播放的集数索引
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
-        // 仅选择黑木耳源
-        selectedAPIs = ["heimuer"];
+        // 仅选择黑木耳源和豆瓣资源
+        selectedAPIs = ["heimuer", "dbzy"];
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
         
         // 默认选中过滤开关
@@ -553,6 +553,11 @@ function resetSearchArea() {
     if (footer) {
         footer.style.position = '';
     }
+    
+    // 如果有豆瓣功能，检查是否需要显示豆瓣推荐区域
+    if (typeof updateDoubanVisibility === 'function') {
+        updateDoubanVisibility();
+    }
 }
 
 // 获取自定义API信息
@@ -566,6 +571,13 @@ function getCustomApiInfo(customApiIndex) {
 
 // 搜索功能 - 修改为支持多选API
 async function search() {
+    // 密码保护校验
+    if (window.isPasswordProtected && window.isPasswordVerified) {
+        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
+            showPasswordModal && showPasswordModal();
+            return;
+        }
+    }
     const query = document.getElementById('searchInput').value.trim();
     
     if (!query) {
@@ -651,10 +663,22 @@ async function search() {
             }
         });
         
+        // 更新搜索结果计数
+        const searchResultsCount = document.getElementById('searchResultsCount');
+        if (searchResultsCount) {
+            searchResultsCount.textContent = allResults.length;
+        }
+        
         // 显示结果区域，调整搜索区域
         document.getElementById('searchArea').classList.remove('flex-1');
         document.getElementById('searchArea').classList.add('mb-8');
         document.getElementById('resultsArea').classList.remove('hidden');
+        
+        // 隐藏豆瓣推荐区域（如果存在）
+        const doubanArea = document.getElementById('doubanArea');
+        if (doubanArea) {
+            doubanArea.classList.add('hidden');
+        }
         
         const resultsDiv = document.getElementById('results');
         
@@ -686,7 +710,6 @@ async function search() {
 
         // 添加XSS保护，使用textContent和属性转义
         resultsDiv.innerHTML = allResults.map(item => {
-            // ...existing code for rendering results...
             const safeId = item.vod_id ? item.vod_id.toString().replace(/[^\w-]/g, '') : '';
             const safeName = (item.vod_name || '').toString()
                 .replace(/</g, '&lt;')
@@ -768,6 +791,13 @@ async function search() {
 
 // 显示详情 - 修改为支持自定义API
 async function showDetails(id, vod_name, sourceCode) {
+    // 密码保护校验
+    if (window.isPasswordProtected && window.isPasswordVerified) {
+        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
+            showPasswordModal && showPasswordModal();
+            return;
+        }
+    }
     if (!id) {
         showToast('视频ID无效', 'error');
         return;
@@ -798,7 +828,6 @@ async function showDetails(id, vod_name, sourceCode) {
         
         const data = await response.json();
         
-        // ...existing code for showing details...
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
@@ -855,6 +884,13 @@ async function showDetails(id, vod_name, sourceCode) {
 
 // 更新播放视频函数，修改为在新标签页中打开播放页面，并保存到历史记录
 function playVideo(url, vod_name, episodeIndex = 0) {
+    // 密码保护校验
+    if (window.isPasswordProtected && window.isPasswordVerified) {
+        if (window.isPasswordProtected() && !window.isPasswordVerified()) {
+            showPasswordModal && showPasswordModal();
+            return;
+        }
+    }
     if (!url) {
         showToast('无效的视频链接', 'error');
         return;
@@ -876,6 +912,7 @@ function playVideo(url, vod_name, episodeIndex = 0) {
     }
     
     // 保存当前状态到localStorage，让播放页面可以获取
+    const currentVideoTitle = vod_name;
     localStorage.setItem('currentVideoTitle', currentVideoTitle);
     localStorage.setItem('currentEpisodeIndex', episodeIndex);
     localStorage.setItem('currentEpisodes', JSON.stringify(currentEpisodes));
@@ -888,7 +925,9 @@ function playVideo(url, vod_name, episodeIndex = 0) {
         url: url,
         episodeIndex: episodeIndex,
         sourceName: sourceName,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        // 重要：将完整的剧集信息也添加到历史记录中
+        episodes: currentEpisodes && currentEpisodes.length > 0 ? [...currentEpisodes] : []
     };
     
     // 保存到观看历史，添加sourceName
