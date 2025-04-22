@@ -135,6 +135,9 @@ const PLAYER_CONFIG = {
     adFilteringStorage: 'adFilteringEnabled' // 存储广告过滤设置的键名
 };
 
+// 修正：挂到window上，供全局/其它文件使用
+window.PLAYER_CONFIG = PLAYER_CONFIG;
+
 // ==== LibreTV: 预加载功能与调试日志开关 ====
 // 是否启用播放器多集预加载功能（见player.html微调）。如需关闭，设为 false
 window.PLAYER_CONFIG.enablePreloading = true;  // 可根据需要设为 false
