@@ -1400,13 +1400,17 @@
         }
     </script>
 
-    // ==== 集数预加载/极致快切部分 ====
+
+    
+    <script>
+
+            // 集数预加载/极致快切部分
     // ======== 预加载多集（m3u8和前3个ts分片）极致快切方案 ========
     // 代码与原始player-preload保持一致
     // ==== 集数预加载/极致快切部分 ====
     // 配置：预加载开关，参见 config.js 需设定 PLAYER_CONFIG.enablePreloading = true/false
-    
-    <script>
+
+        
     (function () {
       const PRELOAD_EPISODE_COUNT = 2;
       const supportsCacheStorage = 'caches' in window && window.caches.open;
