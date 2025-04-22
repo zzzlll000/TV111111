@@ -1402,15 +1402,13 @@
 
 
     
-    <script>
-
-            // 集数预加载/极致快切部分
+  <script>
+    // 集数预加载/极致快切部分
     // ======== 预加载多集（m3u8和前3个ts分片）极致快切方案 ========
     // 代码与原始player-preload保持一致
     // ==== 集数预加载/极致快切部分 ====
     // 配置：预加载开关，参见 config.js 需设定 PLAYER_CONFIG.enablePreloading = true/false
 
-        
     (function () {
       const PRELOAD_EPISODE_COUNT = 2;
       const supportsCacheStorage = 'caches' in window && window.caches.open;
@@ -1425,32 +1423,32 @@
       async function preloadNextEpisodeParts(preloadCount = PRELOAD_EPISODE_COUNT) {
         // 全局配置是否启用
         if (!(typeof PLAYER_CONFIG !== "undefined" && PLAYER_CONFIG.enablePreloading)) {
-          if (state.debugMode) console.log('[Preload] 跳过，因PLAYER_CONFIG.enablePreloading=false');
+          if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log('[Preload] 跳过，因PLAYER_CONFIG.enablePreloading=false');
           return;
         }
         if (isSlowNetwork()) {
-          if (state.debugMode) console.log('[Preload] 跳过，因网络过慢');
+          if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log('[Preload] 跳过，因网络过慢');
           return;
         }
         if (!window.currentEpisodes || typeof window.currentEpisodeIndex !== 'number') {
-          if (state.debugMode) console.log('[Preload] 跳过，window.currentEpisodes/currentEpisodeIndex缺失');
+          if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log('[Preload] 跳过，window.currentEpisodes/currentEpisodeIndex缺失');
           return;
         }
         const idx = window.currentEpisodeIndex, maxIndex = window.currentEpisodes.length - 1;
-        if (state.debugMode) console.log(`[Preload] 尝试预加载从${idx+1}到${Math.min(idx+preloadCount, maxIndex)}集`);
+        if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] 尝试预加载从${idx+1}到${Math.min(idx+preloadCount, maxIndex)}集`);
         for (let offset = 1; offset <= preloadCount; offset++) {
           const episodeIdx = idx + offset;
           if (episodeIdx > maxIndex) break;
           const nextUrl = window.currentEpisodes[episodeIdx];
-          if (state.debugMode) console.log(`[Preload] 检查第${episodeIdx+1}集(${nextUrl})`);
+          if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] 检查第${episodeIdx+1}集(${nextUrl})`);
           if (!nextUrl || typeof nextUrl !== 'string') {
-            if (state.debugMode) console.log(`[Preload] 略过空URL@${episodeIdx}`);
+            if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] 略过空URL@${episodeIdx}`);
             continue;
           }
           try {
             const m3u8Resp = await fetch(nextUrl, { method: "GET", credentials: "same-origin" });
             if (!m3u8Resp.ok) {
-              if (state.debugMode) console.log(`[Preload] m3u8请求失败: ${nextUrl}`);
+              if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] m3u8请求失败: ${nextUrl}`);
               continue;
             }
             const m3u8Text = await m3u8Resp.text();
@@ -1462,7 +1460,7 @@
                 tsUrls.push(/^https?:\/\//i.test(t) ? t : base + t);
               }
             });
-            if (state.debugMode) console.log(`[Preload] m3u8分析结果: ts=${tsUrls.length}`);
+            if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] m3u8分析结果: ts=${tsUrls.length}`);
             if (tsUrls.length === 0) continue;
             tsUrls.forEach(tsUrl => {
               if (supportsCacheStorage) {
@@ -1472,31 +1470,31 @@
                       fetch(tsUrl, { method: "GET", credentials: "same-origin" }).then(resp => {
                         if (resp.ok) {
                           cache.put(tsUrl, resp.clone());
-                          if (state.debugMode) console.log(`[Preload] ts分片已缓存: ${tsUrl}`);
-                        } else if (state.debugMode) {
+                          if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] ts分片已缓存: ${tsUrl}`);
+                        } else if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) {
                           console.log(`[Preload] ts分片拉取失败: ${tsUrl}`);
                         }
                       }).catch(ex => {
-                        if (state.debugMode) console.log(`[Preload] ts fetch异常: ${tsUrl} e=${ex}`);
+                        if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] ts fetch异常: ${tsUrl} e=${ex}`);
                       });
                     } else {
-                      if (state.debugMode) console.log(`[Preload] ts分片已存在缓存: ${tsUrl}`);
+                      if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] ts分片已存在缓存: ${tsUrl}`);
                     }
                   });
                 });
               } else {
                 fetch(tsUrl, { method: "GET", credentials: "same-origin" }).then(resp => {
-                  if (state.debugMode) {
+                  if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) {
                     if (resp.ok) console.log(`[Preload] ts分片已拉取(无缓存): ${tsUrl}`);
                     else console.log(`[Preload] ts分片拉取失败: ${tsUrl}`);
                   }
                 }).catch(ex => {
-                  if (state.debugMode) console.log(`[Preload] ts fetch异常(无缓存): ${tsUrl} e=${ex}`);
+                  if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] ts fetch异常(无缓存): ${tsUrl} e=${ex}`);
                 });
               }
             });
           } catch (e) {
-            if (state.debugMode) console.log(`[Preload] m3u8拉取/处理异常: ${nextUrl}; e=${e}`);
+            if (window.PLAYER_CONFIG && PLAYER_CONFIG.debugMode) console.log(`[Preload] m3u8拉取/处理异常: ${nextUrl}; e=${e}`);
           }
         }
       }
@@ -1554,8 +1552,8 @@
         }
       });
     })();
+</script>
 
-  </script>
 
     
 </body>
