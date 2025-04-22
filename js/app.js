@@ -1,5 +1,5 @@
 // 全局变量
-let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["heimuer"]'); // 默认选中黑木耳
+let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["heimuer", "dbzy"]'); // 默认选中黑木耳和豆瓣资源
 let customAPIs = JSON.parse(localStorage.getItem('customAPIs') || '[]'); // 存储自定义API列表
 
 // 添加当前播放的集数索引
@@ -27,8 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
-        // 仅选择黑木耳源
-        selectedAPIs = ["heimuer"];
+        // 仅选择黑木耳源和豆瓣资源
+        selectedAPIs = ["heimuer", "dbzy"];
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
         
         // 默认选中过滤开关
@@ -553,6 +553,11 @@ function resetSearchArea() {
     if (footer) {
         footer.style.position = '';
     }
+    
+    // 如果有豆瓣功能，检查是否需要显示豆瓣推荐区域
+    if (typeof updateDoubanVisibility === 'function') {
+        updateDoubanVisibility();
+    }
 }
 
 // 获取自定义API信息
@@ -658,10 +663,22 @@ async function search() {
             }
         });
         
+        // 更新搜索结果计数
+        const searchResultsCount = document.getElementById('searchResultsCount');
+        if (searchResultsCount) {
+            searchResultsCount.textContent = allResults.length;
+        }
+        
         // 显示结果区域，调整搜索区域
         document.getElementById('searchArea').classList.remove('flex-1');
         document.getElementById('searchArea').classList.add('mb-8');
         document.getElementById('resultsArea').classList.remove('hidden');
+        
+        // 隐藏豆瓣推荐区域（如果存在）
+        const doubanArea = document.getElementById('doubanArea');
+        if (doubanArea) {
+            doubanArea.classList.add('hidden');
+        }
         
         const resultsDiv = document.getElementById('results');
         
@@ -693,7 +710,6 @@ async function search() {
 
         // 添加XSS保护，使用textContent和属性转义
         resultsDiv.innerHTML = allResults.map(item => {
-            // ...existing code for rendering results...
             const safeId = item.vod_id ? item.vod_id.toString().replace(/[^\w-]/g, '') : '';
             const safeName = (item.vod_name || '').toString()
                 .replace(/</g, '&lt;')
@@ -812,7 +828,6 @@ async function showDetails(id, vod_name, sourceCode) {
         
         const data = await response.json();
         
-        // ...existing code for showing details...
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modalTitle');
         const modalContent = document.getElementById('modalContent');
