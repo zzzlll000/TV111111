@@ -1,5 +1,5 @@
 // 全局变量
-let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["heimuer", "dbzy"]'); // 默认选中黑木耳和豆瓣资源
+let selectedAPIs = JSON.parse(localStorage.getItem('selectedAPIs') || '["ruyi","cjhw","ffzy","lzzy","bfzy","qiqikp","heimuer","mozhua","mdzy","wolong","tyyszy","ikunzy","zy360","wujin","zuida","jisu","dbzy"]'); // 默认选中黑木耳和豆瓣资源
 let customAPIs = JSON.parse(localStorage.getItem('customAPIs') || '[]'); // 存储自定义API列表
 
 // 添加当前播放的集数索引
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
         // 仅选择黑木耳源和豆瓣资源
-        selectedAPIs = ["heimuer", "dbzy"];
+        selectedAPIs = ["ruyi","cjhw","ffzy","lzzy","bfzy","qiqikp","heimuer","mozhua","mdzy","wolong","tyyszy","ikunzy","zy360","wujin","zuida","jisu","dbzy"];
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
         
         // 默认选中过滤开关
@@ -109,7 +109,7 @@ function initAPICheckboxes() {
         // 创建成人API源的复选框
         Object.keys(API_SITES).forEach(apiKey => {
             const api = API_SITES[apiKey];
-            if (!api.adult) return; // 仅添加成人内容API
+            //if (!api.adult) return; // 仅添加成人内容API
             
             const checked = selectedAPIs.includes(apiKey);
             
