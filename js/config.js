@@ -135,6 +135,12 @@ const PLAYER_CONFIG = {
     adFilteringStorage: 'adFilteringEnabled' // 存储广告过滤设置的键名
 };
 
+// ==== LibreTV: 预加载功能与调试日志开关 ====
+// 是否启用播放器多集预加载功能（见player.html微调）。如需关闭，设为 false
+window.PLAYER_CONFIG.enablePreloading = true;  // 可根据需要设为 false
+
+// 是否启用详细调试日志（推荐测试/定位问题时启用）。如需关闭，设为 false 或删除此行
+window.PLAYER_CONFIG.debugMode = true;         // 或 false/留空关闭详细日志
 // 增加错误信息本地化
 const ERROR_MESSAGES = {
     NETWORK_ERROR: '网络连接错误，请检查网络设置',
