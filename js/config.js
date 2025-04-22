@@ -120,6 +120,21 @@ const API_SITES = {
         api: 'https://yutuzy10.com',
         name: '玉兔资源',
         adult: true
+    },
+    91madou: {
+        api: 'https://91md.me/api.php/provide/vod/',
+        name: '91麻豆|AV',
+        adult: true
+    },
+    91md: {
+        api: 'https://91md.me/api.php/provide/vod/from/mdm3u8/',
+        name: '91md|AV',
+        adult: true
+    },
+    madouse: {
+        api: 'http://www.madouse.la/api.php/provide/vod/',
+        name: 'madouse',
+        adult: true
     }
     // 您可以按需添加更多源
 };
