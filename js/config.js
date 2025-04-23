@@ -161,9 +161,9 @@ const CUSTOM_PLAYER_URL = 'player.html'; // 使用相对路径引用本地player
 
 // 增加视频播放相关配置
 const DEFAULTS = {
-    enablePreloading: false, // 是否启用预加载，默认关闭
-    preloadCount: 2, //预加载集数
-    debugMode: true // 是否开启预加载日志
+    enablePreloading: false, // 预加载，默认关闭
+    preloadCount: 2, // 预加载集数
+    debugMode: false // 预加载日志，默认关闭
 };
 
 const PLAYER_CONFIG = {
