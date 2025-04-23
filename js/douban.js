@@ -1,7 +1,7 @@
 // 豆瓣热门电影电视剧推荐功能
 
 // 豆瓣标签列表
-const doubanTags = ['热门', '国产剧', '美剧', '英剧', '纪录片', '综艺', '日本动画'];
+const doubanTags = ['热门', '最新', '经典', '豆瓣高分','古装剧', '冷门佳片', '科幻' ,'喜剧', '综艺', '欧美', '电视剧', '韩国', '日本', '动漫','动画片'];
 let doubanCurrentTag = localStorage.getItem('doubanCurrentTag') || '热门';
 let doubanPageStart = 0;
 const doubanPageSize = 16; // 一次显示的项目数量
@@ -220,7 +220,7 @@ function renderRecommend(tag, pageLimit, pageStart) {
         </div>
     `;
     
-    const target = `https://movie.douban.com/j/search_subjects?type=tv&tag=${tag}&sort=recommend&page_limit=${pageLimit}&page_start=${pageStart}`;
+    const target = `https://movie.douban.com/j/search_subjects?type=movie&tag=${tag}&sort=recommend&page_limit=${pageLimit}&page_start=${pageStart}`;
     
     // 添加超时控制
     const controller = new AbortController();
