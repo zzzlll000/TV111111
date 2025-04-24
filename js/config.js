@@ -46,6 +46,10 @@ const API_SITES = {
         api: 'https://www.77kkpp.com',
         name: '七七看片',
     },
+    wuxianzy: {
+        api: 'https://api.wuxianzy.net',
+        name: '无线资源',
+    },
     heimuer: {
         api: 'https://json.heimuer.xyz',
         name: '黑木耳',
