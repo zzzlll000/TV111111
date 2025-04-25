@@ -13,6 +13,11 @@ function initDouban() {
     // 设置豆瓣开关的初始状态
     const doubanToggle = document.getElementById('doubanToggle');
     if (doubanToggle) {
+        // 如果未设置，默认为启用
+        if (localStorage.getItem('doubanEnabled') === null) {
+            localStorage.setItem('doubanEnabled', 'true');
+        }
+        
         const isEnabled = localStorage.getItem('doubanEnabled') === 'true';
         doubanToggle.checked = isEnabled;
         
