@@ -27,8 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
-        // 仅选择黑木耳源和豆瓣资源
-        selectedAPIs = ["heimuer", "dbzy"];
+        // 默认选择所有普通资源（非成人资源）
+        // 收集所有非成人资源的键
+        const normalApis = Object.keys(API_SITES).filter(key => !API_SITES[key].adult);
+        selectedAPIs = normalApis;
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
         
         // 默认选中过滤开关
