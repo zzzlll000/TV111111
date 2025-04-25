@@ -345,15 +345,23 @@
                 initPlayer(videoUrl);
                 
                 // 尝试从URL参数中恢复播放位置
-                const position = urlParams.get('position');
-                if (position) {
+                const positionFromUrl = urlParams.get('position');
+                let positionToRestore = null;
+                
+                if (positionFromUrl) {
+                    // 如果URL中有position参数，优先使用它
+                    const positionNum = parseInt(positionFromUrl);
+                    if (!isNaN(positionNum) && positionNum > 0) {
+                        positionToRestore = positionNum;
+                        console.log(`从URL恢复播放位置: ${positionToRestore}秒`);
+                    }
+                }
+                
+                if (positionToRestore !== null) {
                     setTimeout(() => {
                         if (dp && dp.video) {
-                            const positionNum = parseInt(position);
-                            if (!isNaN(positionNum) && positionNum > 0) {
-                                dp.seek(positionNum);
-                                showPositionRestoreHint(positionNum);
-                            }
+                            dp.seek(positionToRestore);
+                            showPositionRestoreHint(positionToRestore);
                         }
                     }, 1500);
                 }
@@ -468,6 +476,14 @@
         // 初始化播放器
         function initPlayer(videoUrl) {
             if (!videoUrl) return;
+            
+            // 清除可能存在的旧进度记录，确保使用最新的进度
+            // 这样可以防止旧的进度记录覆盖从URL传递的进度参数
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('position')) {
+                const progressKey = `videoProgress_${getVideoId()}`;
+                localStorage.removeItem(progressKey);
+            }
 
             // 配置HLS.js选项
             const hlsConfig = {
