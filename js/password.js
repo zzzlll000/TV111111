@@ -136,9 +136,6 @@ async function handlePasswordSubmit() {
     if (await verifyPassword(password)) {
         hidePasswordError();
         hidePasswordModal();
-
-        // 触发密码验证成功事件
-        document.dispatchEvent(new CustomEvent('passwordVerified'));
     } else {
         showPasswordError();
         if (passwordInput) {
