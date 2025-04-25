@@ -406,13 +406,15 @@
     <script>
         // 创建全局环境变量对象
         window.__ENV__ = window.__ENV__ || {};
-        
         // 注入服务器端环境变量 (将由服务器端替换)
         // PASSWORD 变量将在这里被服务器端注入
-        window.__ENV__.PASSWORD = "{{PASSWORD}}";
+        window.__ENV__.PASSWORD = "666666";
+        // Docker 部署时可通过构建/启动脚本注入 PROXY_URL/PROXY_URLS
+        // 例如 window.__ENV__.PROXY_URL = "https://api.codetabs.com/v1/proxy?quest=";
+        // window.__ENV__.PROXY_URLS = ["https://api.codetabs.com/v1/proxy?quest=", ...];
     </script>
 
-    <!-- 弹窗显示脚本 -->
+    <!-- 弹窗显示脚本 
     <script>
         // 在页面加载完成后检查用户是否首次访问
         document.addEventListener('DOMContentLoaded', function() {
@@ -433,6 +435,6 @@
                 });
             }
         });
-    </script>
+    </script>-->
 </body>
 </html>

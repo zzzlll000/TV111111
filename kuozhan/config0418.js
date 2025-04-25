@@ -1,6 +1,22 @@
 // 全局常量配置
-const PROXY_URL = '/proxy/';    // 适用于 Cloudflare, Netlify (带重写), Vercel (带重写)
-// const HOPLAYER_URL = 'https://hoplayer.com/index.html';
+
+// 支持多种 CORS 代理备选
+const DEFAULT_PROXY_URLS = [
+    "/proxy/", // 非Docker/Serverless环境默认本地代理
+    // 备选第三方代理（仅Docker部署时注入）
+    // "https://api.codetabs.com/v1/proxy?quest=",
+    // "https://crossorigin.me/",
+    // "https://cors-proxy.htmldriven.com/?url=",
+    // "http://alloworigin.com/get?url=",
+    // "https://api.allorigins.win/get?url="
+];
+
+// 允许通过 window.__ENV__.PROXY_URL 注入（Docker 部署时建议注入）
+let PROXY_URL = (window.__ENV__ && window.__ENV__.PROXY_URL) || DEFAULT_PROXY_URLS[0];
+
+// 支持多备选代理时可扩展为数组
+let PROXY_URLS = (window.__ENV__ && window.__ENV__.PROXY_URLS) || DEFAULT_PROXY_URLS;
+
 const SEARCH_HISTORY_KEY = 'videoSearchHistory';
 const MAX_HISTORY_ITEMS = 5;
 
@@ -33,6 +49,10 @@ const API_SITES = {
         api: 'http://ffzy5.tv',
         name: '非凡影视',
         detail: 'http://ffzy5.tv'
+    },
+    dbzy: {
+        api: 'https://caiji.dbzy5.com',
+        name: '豆瓣资源',
     },
     lzzy: {
         api: 'https://cj.lziapi.com',
@@ -88,14 +108,7 @@ const API_SITES = {
         name: '极速资源',
         detail: 'https://jszyapi.com'
     },
-    dbzy: {
-        api: 'https://caiji.dbzy5.com',
-        name: '豆瓣资源',
-    },
-    wuxianzy: {
-        api: 'https://api.wuxianzy.net',
-        name: '无线资源',
-    },
+
     yayazy: {
         api: 'https://cj.yayazy.net',
         name: '鸭鸭资源',
@@ -154,7 +167,6 @@ const API_SITES = {
         name: '丝袜资源',
         adult: true
     }
-    // 您可以按需添加更多源
 };
 
 // 添加聚合搜索的配置选项
