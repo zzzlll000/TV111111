@@ -61,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 初始检查成人API选中状态
     setTimeout(checkAdultAPIsSelected, 100);
+    
+    // 默认选中所有普通资源（对所有用户）
+    // 如果用户没有选中任何API或只选中了很少的API，自动选中所有普通资源
+    if (selectedAPIs.length < 3) {
+        selectAllAPIs(true, true); // 选中所有普通资源（非成人资源）
+    }
 });
 
 // 初始化API复选框
